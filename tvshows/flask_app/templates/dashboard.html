@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="d-flex justify-content-between align-items-center col-12">
+        <h1 class="text-center align-items-center">Howdy, {{user.first_name}}!!!</h1>
+        <div class="d-flex col-4 justify-content-around">
+            <a href="/logout" class="btn btn-info">Logout</a>
+        </div>
+    </nav>
+    <div class="col-8 mx-auto">
+        <table class="table table-striped table-hover boreder-primary col-20">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Network</th>
+                    <th>Release Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for show in shows %}
+                    <tr>
+                        <td>{{show.title}}</td>
+                        <td>{{show.network}}</td>
+                        <td>{{show.release_date}}</td>
+                        {% if show.user_id == session.user_id %}
+                            <td><a href="/show/{{show.id}}">Show</a></td>
+                            <td><a href="/edit/show/{{show.id}}">Edit</a></td>
+                            <td><a href="/destroy/show/{{show.id}}">Delete</a></td>
+                        {%else%}
+                        <td><a href="/show/{{show.id}}">Show</a></td>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex col-4 justify-content-around align-items-center">
+        <a href="/new/show" class="btn btn-primary">Add a New Show</a>
+    </div>
+</body>
+</html>
